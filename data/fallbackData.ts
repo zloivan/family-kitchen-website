@@ -68,8 +68,7 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     viewFullMenuButton: "მთლიანი მენიუს ნახვა",
     chooseDeliveryService: "აირჩიეთ მიტანის სერვისი",
     orderOn: "შეუკვეთე",
-    closeButton: "დახურვა",
-    orderNowButton: "შეკვეთა"
+    closeButton: "დახურვა"
   },
   EN: {
     heroTitle: "Family Kitchen",
@@ -89,8 +88,7 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     viewFullMenuButton: "View Full Menu",
     chooseDeliveryService: "Choose a delivery service",
     orderOn: "Order on",
-    closeButton: "Close",
-    orderNowButton: "Order Now"
+    closeButton: "Close"
   },
   RU: {
     heroTitle: "Семейная кухня",
@@ -110,7 +108,6 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     viewFullMenuButton: "Посмотреть полное меню",
     chooseDeliveryService: "Выберите сервис доставки",
     orderOn: "Заказать на",
-    closeButton: "Закрыть",
-    orderNowButton: "Заказать"
+    closeButton: "Закрыть"
   }
 };
