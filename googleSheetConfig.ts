@@ -16,5 +16,5 @@ export const GOOGLE_SHEET_URLS = {
   UI_TEXT: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSHbCBLTXJ3Kv4Ow3Brr8C6xeDDfPglyUJmo8qG878DFT1Bs95OWE2PAULmQr8g-kv4xUMq6e6GeNlN/pub?gid=318302949&single=true&output=tsv',
   // ACTION: Create a 'Categories' tab, publish it, and paste the .tsv URL here.
   // Columns should be: key, sortOrder, nameKa, nameEn, nameRu
-  CATEGORIES: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSHbCBLTXJ3Kv4Ow3Brr8C6xeDDfPglyUJmo8qG878DFT1Bs95OWE2PAULmQr8g-kv4xUMq6e6GeNlN/pub?gid=1234567890&single=true&output=tsv',
+  CATEGORIES: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSHbCBLTXJ3Kv4Ow3Brr8C6xeDDfPglyUJmo8qG878DFT1Bs95OWE2PAULmQr8g-kv4xUMq6e6GeNlN/pub?gid=76054856&single=true&output=tsv',
 };
