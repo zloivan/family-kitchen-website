@@ -1,16 +1,18 @@
+
 // FIX: Removed '/// <reference types="vite/client" />' as it was causing a "Cannot find type definition file" error.
 import React, { useState, useEffect } from 'react';
-import { Language, Page, MenuItem, BusinessConfig } from './types';
+import { Language, Page, MenuItem, BusinessConfig, MenuCategory } from './types';
 import { HomePage } from './HomePage';
 import { MenuPage } from './MenuPage';
-import { fetchBusinessConfig, fetchMenuData, fetchTranslations } from './services/googleSheetsService';
-import { FALLBACK_BUSINESS_CONFIG, FALLBACK_MENU_ITEMS, FALLBACK_CATEGORIES, FALLBACK_TRANSLATIONS } from './data/fallbackData';
+import { fetchBusinessConfig, fetchCategories, fetchMenuData, fetchTranslations } from './services/googleSheetsService';
+import { FALLBACK_BUSINESS_CONFIG, FALLBACK_MENU_ITEMS, FALLBACK_CATEGORIES_LIST, FALLBACK_TRANSLATIONS } from './data/fallbackData';
 
 // Define a type for all fetched data
 interface AppData {
   menu: MenuItem[];
   config: BusinessConfig;
   translations: Record<Language, Record<string, string>>;
+  categories: MenuCategory[];
 }
 
 const App: React.FC = () => {
@@ -23,29 +25,39 @@ const App: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [{ menu }, config, translations] = await Promise.all([
+        const [{ menu }, categories, config, translations] = await Promise.all([
           fetchMenuData(),
+          fetchCategories(),
           fetchBusinessConfig(),
           fetchTranslations()
         ]);
-        setData({ menu, config, translations });
+
+        // Merge category names into the main translations object for consistent text management
+        const mergedTranslations = { ...translations };
+        categories.forEach(cat => {
+          mergedTranslations.KA[cat.key] = cat.nameKa;
+          mergedTranslations.EN[cat.key] = cat.nameEn;
+          mergedTranslations.RU[cat.key] = cat.nameRu;
+        });
+
+        setData({ menu, config, translations: mergedTranslations, categories });
         setUsingFallback(false);
       } catch (err) {
         console.warn("Could not load live data from Google Sheets. Using local fallback data.", err);
-        // In fallback mode, we also need to merge category translations into the main translations object
+        
+        // In fallback mode, merge fallback category names into the main fallback translations
         const mergedTranslations = { ...FALLBACK_TRANSLATIONS };
-        for (const langKey in mergedTranslations) {
-          const lang = langKey as Language;
-          const lowerLang = lang.toLowerCase() as 'ka' | 'en' | 'ru';
-          for (const catKey in FALLBACK_CATEGORIES) {
-             mergedTranslations[lang][catKey] = FALLBACK_CATEGORIES[catKey][lowerLang];
-          }
-        }
+        FALLBACK_CATEGORIES_LIST.forEach(cat => {
+            mergedTranslations.KA[cat.key] = cat.nameKa;
+            mergedTranslations.EN[cat.key] = cat.nameEn;
+            mergedTranslations.RU[cat.key] = cat.nameRu;
+        });
 
         setData({
           menu: FALLBACK_MENU_ITEMS,
           config: FALLBACK_BUSINESS_CONFIG,
           translations: mergedTranslations,
+          categories: FALLBACK_CATEGORIES_LIST,
         });
         setUsingFallback(true);
       }
@@ -119,6 +131,7 @@ const App: React.FC = () => {
           setLang={setLang} 
           t={t} 
           menuItems={data.menu} 
+          categories={data.categories}
           config={data.config}
         />
       )}

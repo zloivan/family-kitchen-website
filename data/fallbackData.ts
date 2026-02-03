@@ -1,5 +1,5 @@
 
-import { BusinessConfig, MenuItem, Language } from '../types';
+import { BusinessConfig, MenuItem, Language, MenuCategory } from '../types';
 
 export const FALLBACK_BUSINESS_CONFIG: BusinessConfig = {
   addressKa: "თბილისი, აკაკი წერეთლის პროსპექტი, 67",
@@ -41,11 +41,11 @@ export const FALLBACK_MENU_ITEMS: MenuItem[] = [
   }
 ];
 
-export const FALLBACK_CATEGORIES: { [key: string]: { ka: string, en: string, ru: string } } = {
-  Main: { ka: "მთავარი", en: "Main", ru: "Основное" },
-  Dumplings: { ka: "ხინკალი", en: "Dumplings", ru: "Хинкали" },
-  Soups: { ka: "წვნიანები", en: "Soups", ru: "Супы" },
-};
+export const FALLBACK_CATEGORIES_LIST: MenuCategory[] = [
+  { key: 'Soups', sortOrder: 1, nameKa: 'წვნიანები', nameEn: 'Soups', nameRu: 'Супы' },
+  { key: 'Main', sortOrder: 2, nameKa: 'მთავარი', nameEn: 'Main', nameRu: 'Основное' },
+  { key: 'Dumplings', sortOrder: 3, nameKa: 'ხინკალი', nameEn: 'Dumplings', nameRu: 'Хинкали' },
+];
 
 export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
   KA: {

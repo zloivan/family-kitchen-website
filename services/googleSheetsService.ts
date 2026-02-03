@@ -1,6 +1,6 @@
 
 import { GOOGLE_SHEET_URLS } from '../googleSheetConfig';
-import { BusinessConfig, Language, MenuItem } from '../types';
+import { BusinessConfig, Language, MenuCategory, MenuItem } from '../types';
 
 // --- Data Parsers ---
 
@@ -80,6 +80,13 @@ export async function fetchMenuData(): Promise<{ menu: MenuItem[] }> {
   const menu = tsvToObjects<MenuItem>(tsv);
   
   return { menu };
+}
+
+export async function fetchCategories(): Promise<MenuCategory[]> {
+  const response = await fetch(GOOGLE_SHEET_URLS.CATEGORIES);
+  if (!response.ok) throw new Error('Failed to fetch categories data');
+  const tsv = await response.text();
+  return tsvToObjects<MenuCategory>(tsv);
 }
 
 export async function fetchBusinessConfig(): Promise<BusinessConfig> {

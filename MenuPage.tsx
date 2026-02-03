@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { BusinessConfig, Language, MenuItem, Page } from './types';
+import React, { useState, useMemo } from 'react';
+import { BusinessConfig, Language, MenuCategory, MenuItem, Page } from './types';
 
 type MenuPageProps = {
   setPage: (page: Page) => void;
@@ -8,6 +8,7 @@ type MenuPageProps = {
   setLang: (lang: Language) => void;
   t: (key: string) => string;
   menuItems: MenuItem[];
+  categories: MenuCategory[];
   config: BusinessConfig;
 };
 
@@ -59,10 +60,24 @@ const MenuNavbar: React.FC<{ setPage: (page: Page) => void; lang: Language; setL
   </header>
 );
 
-export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, menuItems, config }) => {
+export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, menuItems, categories, config }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   
-  const categoryKeys = Array.from(new Set(menuItems.map(item => item.category))).sort();
+  const sortedCategories = useMemo(() => {
+    // If categories are provided, sort them by the specified order.
+    if (categories && categories.length > 0) {
+      return [...categories].sort((a, b) => a.sortOrder - b.sortOrder);
+    }
+    // Fallback: if no categories are managed in the sheet, derive from menu items and sort alphabetically.
+    const derivedKeys = Array.from(new Set(menuItems.map(item => item.category))).sort();
+    return derivedKeys.map((key, index) => ({
+      key,
+      sortOrder: index + 1,
+      nameKa: key,
+      nameEn: key,
+      nameRu: key,
+    }));
+  }, [categories, menuItems]);
 
   const filteredItems = activeCategory === 'all'
     ? menuItems
@@ -85,13 +100,13 @@ export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, m
               >
                 {t('all')}
               </button>
-              {categoryKeys.map(catKey => (
+              {sortedCategories.map(cat => (
                 <button 
-                  key={catKey}
-                  onClick={() => setActiveCategory(catKey)}
-                  className={`w-full text-left text-sm font-semibold p-3 rounded-md transition-colors ${activeCategory === catKey ? 'bg-[var(--text-dark)] text-white' : 'hover:bg-stone-200'}`}
+                  key={cat.key}
+                  onClick={() => setActiveCategory(cat.key)}
+                  className={`w-full text-left text-sm font-semibold p-3 rounded-md transition-colors ${activeCategory === cat.key ? 'bg-[var(--text-dark)] text-white' : 'hover:bg-stone-200'}`}
                 >
-                  {t(catKey)}
+                  {t(cat.key)}
                 </button>
               ))}
             </nav>

@@ -16,6 +16,14 @@ export interface MenuItem {
   isSpecial?: boolean;
 }
 
+export interface MenuCategory {
+  key: string;
+  sortOrder: number;
+  nameKa: string;
+  nameEn: string;
+  nameRu: string;
+}
+
 export interface BusinessConfig {
   addressKa: string;
   addressEn: string;
