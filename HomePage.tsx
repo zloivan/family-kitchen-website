@@ -1,12 +1,11 @@
 import React from 'react';
-import { BusinessConfig, Language, MenuItem, Page } from './types';
+import { BusinessConfig, Language, Page } from './types';
 
 type HomePageProps = {
   setPage: (page: Page) => void;
   lang: Language;
   setLang: (lang: Language) => void;
   t: (key: string) => string;
-  menuItems: MenuItem[];
   config: BusinessConfig;
 };
 
@@ -37,7 +36,7 @@ const Navbar: React.FC<{ setPage: (page: Page) => void; lang: Language; setLang:
   </header>
 );
 
-export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, menuItems, config }) => {
+export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, config }) => {
   return (
     <>
       <Navbar setPage={setPage} lang={lang} setLang={setLang} t={t} />

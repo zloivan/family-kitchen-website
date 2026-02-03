@@ -1,4 +1,3 @@
-
 import { GOOGLE_SHEET_URLS } from '../googleSheetConfig';
 import { BusinessConfig, Language, MenuItem } from '../types';
 
@@ -81,10 +80,12 @@ export async function fetchMenuData(): Promise<{ menu: MenuItem[], categories: a
   
   // Dynamically generate categories from menu data
   const categorySet = new Set(menu.map(item => item.category));
-  const categories = {};
+  const categories: { [key: string]: { ka: string, en: string, ru: string } } = {};
   // You might need a separate sheet for category translations if they become complex
   for (const cat of categorySet) {
-    categories[cat] = { ka: cat, en: cat, ru: cat }; // Simple fallback
+    if (cat) { // Ensure category is not an empty string
+      categories[cat] = { ka: cat, en: cat, ru: cat }; // Simple fallback
+    }
   }
 
   return { menu, categories };
@@ -99,6 +100,7 @@ export async function fetchBusinessConfig(): Promise<BusinessConfig> {
   // Structure the flat key-value data into the required BusinessConfig shape
   return {
     addressKa: rawConfig.addressKa,
+    // FIX: Corrected typo from `raw.Config` to `rawConfig`.
     addressEn: rawConfig.addressEn,
     addressRu: rawConfig.addressRu,
     phone: rawConfig.phone,

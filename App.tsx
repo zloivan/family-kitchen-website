@@ -101,7 +101,6 @@ const App: React.FC = () => {
           lang={lang} 
           setLang={setLang} 
           t={t} 
-          menuItems={data.menu} 
           config={data.config} 
         />
       )}
