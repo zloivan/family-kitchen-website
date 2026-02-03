@@ -118,7 +118,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, c
                     <a href={`tel:${config.phone}`} className="hover:opacity-70 transition-opacity">{config.phone}</a>
                   </div>
                 </div>
-                <a href="https://maps.app.goo.gl/G8VdGzWfEJK5X1bL7" target="_blank" rel="noopener" className="inline-block mt-12 text-[12px] font-bold tracking-[0.2em] uppercase bg-[var(--text-dark)] text-white px-8 py-4 hover:opacity-80 transition-opacity">
+                <a href="https://maps.app.goo.gl/ea6cEkJQmwYCJehu5" target="_blank" rel="noopener" className="inline-block mt-12 text-[12px] font-bold tracking-[0.2em] uppercase bg-[var(--text-dark)] text-white px-8 py-4 hover:opacity-80 transition-opacity">
                   {t('openInMaps')}
                 </a>
               </div>
