@@ -34,5 +34,6 @@ export interface BusinessConfig {
   socials: {
     instagram?: string;
     whatsapp?: string;
+    facebook?: string;
   };
 }

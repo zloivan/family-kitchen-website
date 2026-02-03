@@ -1,3 +1,4 @@
+
 import { GOOGLE_SHEET_URLS } from '../googleSheetConfig';
 import { BusinessConfig, Language, MenuItem } from '../types';
 
@@ -90,7 +91,6 @@ export async function fetchBusinessConfig(): Promise<BusinessConfig> {
   // Structure the flat key-value data into the required BusinessConfig shape
   return {
     addressKa: rawConfig.addressKa,
-    // FIX: Corrected typo from `raw.Config` to `rawConfig`.
     addressEn: rawConfig.addressEn,
     addressRu: rawConfig.addressRu,
     phone: rawConfig.phone,
@@ -106,6 +106,7 @@ export async function fetchBusinessConfig(): Promise<BusinessConfig> {
     socials: {
       instagram: rawConfig.socialsInstagram,
       whatsapp: rawConfig.socialsWhatsapp,
+      facebook: rawConfig.socialsFacebook,
     }
   };
 }

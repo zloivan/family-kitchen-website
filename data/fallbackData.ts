@@ -17,7 +17,8 @@ export const FALLBACK_BUSINESS_CONFIG: BusinessConfig = {
   },
   socials: {
     instagram: "https://instagram.com",
-    whatsapp: "https://wa.me/995551515511"
+    whatsapp: "https://wa.me/995551515511",
+    facebook: "https://facebook.com"
   }
 };
 
@@ -59,7 +60,8 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     contact: "კონტაქტი",
     openInMaps: "გახსენი რუკაზე",
     all: "ყველა",
-    phoneLabel: "ტელეფონი"
+    phoneLabel: "ტელეფონი",
+    socials: "სოციალური ქსელები"
   },
   EN: {
     heroTitle: "Family Kitchen",
@@ -73,7 +75,8 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     contact: "Contact",
     openInMaps: "Open in Maps",
     all: "All",
-    phoneLabel: "Phone"
+    phoneLabel: "Phone",
+    socials: "Socials"
   },
   RU: {
     heroTitle: "Семейная кухня",
@@ -87,6 +90,7 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     contact: "Контакт",
     openInMaps: "Открыть на карте",
     all: "Все",
-    phoneLabel: "Телефон"
+    phoneLabel: "Телефон",
+    socials: "Социальные сети"
   }
 };

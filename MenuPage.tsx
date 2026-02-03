@@ -11,13 +11,34 @@ type MenuPageProps = {
   config: BusinessConfig;
 };
 
+// Social Icons Component for the Menu Page Footer
+const FooterSocialIcons: React.FC<{ config: BusinessConfig; className?: string }> = ({ config, className = '' }) => (
+  <div className={`flex items-center justify-center gap-6 ${className}`}>
+    {config.socials.instagram && (
+      <a href={config.socials.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:opacity-70 transition-opacity">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      </a>
+    )}
+    {config.socials.whatsapp && (
+      <a href={config.socials.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="hover:opacity-70 transition-opacity">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.398 1.908 6.161l.119.198-1.015 3.698 3.797-1.045.166.096z"></path></svg>
+      </a>
+    )}
+    {config.socials.facebook && (
+      <a href={config.socials.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:opacity-70 transition-opacity">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+      </a>
+    )}
+  </div>
+);
+
 const LanguageToggle: React.FC<{ current: Language; onToggle: (lang: Language) => void; }> = ({ current, onToggle }) => (
-  <div className="flex bg-white p-1 rounded-full border border-stone-200">
+  <div className="flex bg-black/5 backdrop-blur-md p-1 rounded-full border border-black/10">
     {(['KA', 'EN', 'RU'] as Language[]).map(l => (
       <button 
         key={l}
         onClick={() => onToggle(l)}
-        className={`text-[10px] font-bold tracking-widest px-3 py-1.5 transition-all rounded-full ${current === l ? 'bg-[var(--text-dark)] text-white shadow' : 'text-black/60 hover:bg-stone-100'}`}
+        className={`text-[10px] font-bold tracking-widest px-3 py-1.5 transition-all rounded-full ${current === l ? 'bg-white text-[var(--text-dark)] shadow' : 'text-black/70 hover:bg-white/70'}`}
       >
         {l}
       </button>
@@ -41,7 +62,6 @@ const MenuNavbar: React.FC<{ setPage: (page: Page) => void; lang: Language; setL
 export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, menuItems, config }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   
-  // Derive unique, sorted category keys directly from the menu items
   const categoryKeys = Array.from(new Set(menuItems.map(item => item.category))).sort();
 
   const filteredItems = activeCategory === 'all'
@@ -57,7 +77,6 @@ export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, m
         </div>
         
         <div className="flex flex-col md:flex-row gap-8 lg:gap-16">
-          {/* Sticky Category Nav */}
           <aside className="md:w-1/4 lg:w-1/5 md:sticky top-28 self-start">
             <nav className="flex flex-row md:flex-col gap-2 md:gap-3 flex-wrap">
               <button 
@@ -78,7 +97,6 @@ export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, m
             </nav>
           </aside>
 
-          {/* Menu Items */}
           <main className="w-full md:w-3/4 lg:w-4/5">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-10">
               {filteredItems.map(item => (
@@ -100,9 +118,9 @@ export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, m
           </main>
         </div>
       </div>
-       <footer className="bg-stone-100 mt-20 py-16 px-6 text-center">
-         <h3 className="serif text-3xl mb-4">{t('deliveryTitle')}</h3>
-         <div className="flex flex-wrap justify-center gap-8 mt-8">
+       <footer className="bg-stone-100 mt-20 py-16 px-6 text-center text-stone-600">
+         <h3 className="serif text-3xl mb-4 text-[var(--text-dark)]">{t('deliveryTitle')}</h3>
+         <div className="flex flex-wrap justify-center gap-8 my-8">
            {config.deliveryLinks.glovo && (
             <a href={config.deliveryLinks.glovo} target="_blank" rel="noopener" className="font-bold text-yellow-500 border-b-2 border-yellow-200 hover:border-yellow-500 transition-colors pb-1">
              Glovo
@@ -119,6 +137,10 @@ export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, m
             </a>
            )}
          </div>
+         <FooterSocialIcons config={config} className="text-stone-500 my-8" />
+         <p className="text-xs tracking-widest text-stone-400">
+          &copy; {new Date().getFullYear()} {t('heroTitle')}.
+        </p>
       </footer>
     </>
   );
