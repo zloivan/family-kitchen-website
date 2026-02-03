@@ -81,7 +81,8 @@ const SpecialOffers: React.FC<{
   t: (key: string) => string; 
   onNavigateToMenu: (category?: string) => void;
   onItemSelect: (item: MenuItem) => void;
-}> = ({ items, lang, t, onNavigateToMenu, onItemSelect }) => {
+  config: BusinessConfig;
+}> = ({ items, lang, t, onNavigateToMenu, onItemSelect, config }) => {
   const FALLBACK_IMAGE_URL = 'https://images.unsplash.com/photo-1565895405138-6c3a1555da6a?q=80&w=1800&auto=format&fit=crop';
 
   return (
@@ -91,41 +92,49 @@ const SpecialOffers: React.FC<{
           <h2 className="text-5xl md:text-7xl serif mb-12">{t('specialOffersTitle')}</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {items.map(item => (
-            <button
-              key={item.id}
-              onClick={() => onItemSelect(item)}
-              className="bg-stone-50 border border-stone-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2"
-              aria-label={`View details for ${item.nameEn}`}
-            >
-              <div className="flex-grow"> {/* Content wrapper */}
-                <img 
-                  src={item.imageUrl || FALLBACK_IMAGE_URL} 
-                  alt={lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
-                  className="w-full h-56 object-cover"
-                  loading="lazy"
-                />
-                <div className="p-6">
-                  <div className="flex justify-between items-baseline mb-3">
-                    <h4 className="text-xl font-semibold tracking-tight flex items-center gap-3">
-                      {lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
-                      <span className="text-yellow-500">★</span>
-                    </h4>
-                    <div className="flex-grow border-b border-dashed border-stone-200 mx-4"></div>
-                    <span className="text-base font-semibold text-black/80">₾{item.price.toFixed(2)}</span>
+          {items.map(item => {
+            const hasDeliveryOptions = !!((item.glovoLink || item.woltLink || item.boltLink) || (config.deliveryLinks.glovo || config.deliveryLinks.wolt || config.deliveryLinks.bolt));
+            const buttonText = t(hasDeliveryOptions ? 'orderNowButton' : 'viewButton');
+            const buttonStyle = hasDeliveryOptions
+              ? 'bg-[var(--accent-primary)] text-white group-hover:bg-red-800'
+              : 'bg-stone-500 text-white group-hover:bg-stone-600';
+
+            return (
+              <button
+                key={item.id}
+                onClick={() => onItemSelect(item)}
+                className="bg-stone-50 border border-stone-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2"
+                aria-label={`View details for ${item.nameEn}`}
+              >
+                <div className="flex-grow"> {/* Content wrapper */}
+                  <img 
+                    src={item.imageUrl || FALLBACK_IMAGE_URL} 
+                    alt={lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
+                    className="w-full h-56 object-cover"
+                    loading="lazy"
+                  />
+                  <div className="p-6">
+                    <div className="flex justify-between items-baseline mb-3">
+                      <h4 className="text-xl font-semibold tracking-tight flex items-center gap-3">
+                        {lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
+                        <span className="text-yellow-500">★</span>
+                      </h4>
+                      <div className="flex-grow border-b border-dashed border-stone-200 mx-4"></div>
+                      <span className="text-base font-semibold text-black/80">₾{item.price.toFixed(2)}</span>
+                    </div>
+                    <p className="text-sm text-black/50 pr-4">
+                      {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
+                    </p>
                   </div>
-                  <p className="text-sm text-black/50 pr-4">
-                    {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
-                  </p>
                 </div>
-              </div>
-              <div className="px-6 pb-6 pt-2"> {/* Fake button wrapper */}
-                <div className="w-full bg-[var(--accent-primary)] text-white text-center px-4 py-3 text-xs font-bold tracking-widest uppercase transition-colors group-hover:bg-red-800 rounded-md shadow">
-                  {t('orderNowButton')}
+                <div className="px-6 pb-6 pt-2"> {/* Fake button wrapper */}
+                  <div className={`w-full text-center px-4 py-3 text-xs font-bold tracking-widest uppercase transition-colors rounded-md shadow ${buttonStyle}`}>
+                    {buttonText}
+                  </div>
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            )
+          })}
         </div>
         <div className="text-center mt-16">
           <button 
@@ -184,6 +193,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, c
              t={t} 
              onNavigateToMenu={(category) => setPage('menu', category)}
              onItemSelect={onItemSelect}
+             config={config}
           />
         )}
 
