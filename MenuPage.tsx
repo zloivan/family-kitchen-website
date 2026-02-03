@@ -25,12 +25,12 @@ const FooterSocialIcons: React.FC<{ config: BusinessConfig; className?: string }
     )}
     {config.socials.whatsapp && (
       <a href={config.socials.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="hover:opacity-70 transition-opacity">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.398 1.908 6.161l.119.198-1.015 3.698 3.797-1.045.166.096z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24" fill="currentColor" stroke="none"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.398 1.908 6.161l.119.198-1.015 3.698 3.797-1.045.166.096z"></path></svg>
       </a>
     )}
     {config.socials.facebook && (
       <a href={config.socials.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:opacity-70 transition-opacity">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24" fill="currentColor" stroke="none"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
       </a>
     )}
   </div>
@@ -125,26 +125,41 @@ export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, m
 
           <main className="w-full md:w-3/4 lg:w-4/5">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-10">
-              {filteredItems.map(item => (
-                <button 
-                  key={item.id} 
-                  className="group text-left p-2 -m-2 rounded-lg hover:bg-stone-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] transition-colors"
-                  onClick={() => onItemSelect(item)}
-                  aria-label={`Order ${item.nameEn}`}
-                >
-                  <div className="flex justify-between items-baseline mb-2">
-                    <h4 className="text-xl font-semibold tracking-tight flex items-center gap-3">
-                      {lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
-                      {item.isSpecial && <span className="text-yellow-500">★</span>}
-                    </h4>
-                    <div className="flex-grow border-b border-dashed border-stone-200 mx-4"></div>
-                    <span className="text-base font-semibold text-black/80">₾{item.price.toFixed(2)}</span>
-                  </div>
-                  <p className="text-sm text-black/50 pr-4">
-                    {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
-                  </p>
-                </button>
-              ))}
+              {filteredItems.map(item => {
+                const hasDeliveryOptions = !!((item.glovoLink || item.woltLink || item.boltLink) || (config.deliveryLinks.glovo || config.deliveryLinks.wolt || config.deliveryLinks.bolt));
+                const buttonText = t(hasDeliveryOptions ? 'orderButton' : 'viewButton');
+                const buttonStyle = hasDeliveryOptions
+                  ? 'bg-[var(--accent-primary)] text-white group-hover:bg-red-800'
+                  : 'bg-stone-200 text-[var(--text-dark)] group-hover:bg-stone-300';
+                
+                return (
+                  <button 
+                    key={item.id} 
+                    className="group text-left p-4 rounded-lg hover:bg-stone-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] transition-colors flex flex-col justify-between"
+                    onClick={() => onItemSelect(item)}
+                    aria-label={`${buttonText} ${item.nameEn}`}
+                  >
+                    <div>
+                      <div className="flex justify-between items-baseline mb-2">
+                        <h4 className="text-xl font-semibold tracking-tight flex items-center gap-3">
+                          {lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
+                          {item.isSpecial && <span className="text-yellow-500">★</span>}
+                        </h4>
+                        <div className="flex-grow border-b border-dashed border-stone-200 mx-4"></div>
+                        <span className="text-base font-semibold text-black/80">₾{item.price.toFixed(2)}</span>
+                      </div>
+                      <p className="text-sm text-black/50 pr-4">
+                        {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
+                      </p>
+                    </div>
+                    <div className="mt-4 self-start">
+                      <div className={`inline-block text-xs font-bold tracking-widest uppercase px-5 py-2.5 rounded-md shadow-sm transition-colors ${buttonStyle}`}>
+                          {buttonText}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </main>
         </div>

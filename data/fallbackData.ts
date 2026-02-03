@@ -69,7 +69,10 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     chooseDeliveryService: "აირჩიეთ მიტანის სერვისი",
     orderOn: "შეუკვეთე",
     orderNowButton: "შეკვეთა",
-    closeButton: "დახურვა"
+    closeButton: "დახურვა",
+    orderButton: "შეკვეთა",
+    viewButton: "ნახვა",
+    deliveryNotAvailable: "მიტანის სერვისი მიუწვდომელია"
   },
   EN: {
     heroTitle: "Family Kitchen",
@@ -90,7 +93,10 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     chooseDeliveryService: "Choose a delivery service",
     orderOn: "Order on",
     orderNowButton: "Order Now",
-    closeButton: "Close"
+    closeButton: "Close",
+    orderButton: "Order",
+    viewButton: "View",
+    deliveryNotAvailable: "Delivery is not available for this item"
   },
   RU: {
     heroTitle: "Семейная кухня",
@@ -111,6 +117,9 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     chooseDeliveryService: "Выберите сервис доставки",
     orderOn: "Заказать на",
     orderNowButton: "Заказать",
-    closeButton: "Закрыть"
+    closeButton: "Закрыть",
+    orderButton: "Заказать",
+    viewButton: "Посмотреть",
+    deliveryNotAvailable: "Доставка для этого блюда недоступна"
   }
 };
