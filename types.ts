@@ -14,6 +14,7 @@ export interface MenuItem {
   descriptionRu?: string;
   category: string;
   isSpecial?: boolean;
+  imageUrl?: string;
 }
 
 export interface MenuCategory {

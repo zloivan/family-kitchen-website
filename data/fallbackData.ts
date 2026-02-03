@@ -25,7 +25,8 @@ export const FALLBACK_BUSINESS_CONFIG: BusinessConfig = {
 export const FALLBACK_MENU_ITEMS: MenuItem[] = [
   {
     id: 'khachapuri_megrelian', nameKa: "მეგრული ხაჭაპური", nameEn: "Megrelian Khachapuri", nameRu: "Мегрельский хачапури", price: 18,
-    descriptionKa: "სახლური ყველით", descriptionEn: "With homemade cheese", descriptionRu: "С домашним сыром", category: "Main", isSpecial: true
+    descriptionKa: "სახლური ყველით", descriptionEn: "With homemade cheese", descriptionRu: "С домашним сыром", category: "Main", isSpecial: true,
+    imageUrl: "https://images.unsplash.com/photo-1606727288937-4c575a7c8f0d?q=80&w=1800&auto=format&fit=crop"
   },
   {
     id: 'khinkali_meat', nameKa: "ხინკალი ხორცით", nameEn: "Khinkali (Meat)", nameRu: "Хинкали с мясом", price: 12,
@@ -37,7 +38,8 @@ export const FALLBACK_MENU_ITEMS: MenuItem[] = [
   },
   {
     id: 'lobio', nameKa: "ლობიო", nameEn: "Lobio", nameRu: "Лобио", price: 9,
-    descriptionKa: "ტრადიციული", descriptionEn: "Traditional", descriptionRu: "Традиционное", category: "Soups", isSpecial: true
+    descriptionKa: "ტრადიციული", descriptionEn: "Traditional", descriptionRu: "Традиционное", category: "Soups", isSpecial: true,
+    imageUrl: "" // This will use the fallback image
   }
 ];
 

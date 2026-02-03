@@ -74,32 +74,44 @@ const Navbar: React.FC<{ setPage: (page: Page) => void; lang: Language; setLang:
   </header>
 );
 
-const SpecialOffers: React.FC<{ items: MenuItem[]; lang: Language; t: (key: string) => string; }> = ({ items, lang, t }) => (
-  <section className="py-24 md:py-32 px-6 bg-white">
-    <div className="max-w-6xl mx-auto">
-      <div className="text-center">
-        <h2 className="text-5xl md:text-7xl serif mb-12">{t('specialOffersTitle')}</h2>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {items.map(item => (
-          <div key={item.id} className="bg-stone-50 border border-stone-200 rounded-lg p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
-             <div className="flex justify-between items-baseline mb-3">
-                <h4 className="text-xl font-semibold tracking-tight flex items-center gap-3">
-                  {lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
-                  <span className="text-yellow-500">★</span>
-                </h4>
-                <div className="flex-grow border-b border-dashed border-stone-200 mx-4"></div>
-                <span className="text-base font-semibold text-black/80">₾{item.price.toFixed(2)}</span>
+const SpecialOffers: React.FC<{ items: MenuItem[]; lang: Language; t: (key: string) => string; }> = ({ items, lang, t }) => {
+  const FALLBACK_IMAGE_URL = 'https://images.unsplash.com/photo-1565895405138-6c3a1555da6a?q=80&w=1800&auto=format&fit=crop';
+
+  return (
+    <section className="py-24 md:py-32 px-6 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center">
+          <h2 className="text-5xl md:text-7xl serif mb-12">{t('specialOffersTitle')}</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {items.map(item => (
+            <div key={item.id} className="bg-stone-50 border border-stone-200 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col">
+              <img 
+                src={item.imageUrl || FALLBACK_IMAGE_URL} 
+                alt={lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
+                className="w-full h-56 object-cover"
+                loading="lazy"
+              />
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex justify-between items-baseline mb-3">
+                  <h4 className="text-xl font-semibold tracking-tight flex items-center gap-3">
+                    {lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
+                    <span className="text-yellow-500">★</span>
+                  </h4>
+                  <div className="flex-grow border-b border-dashed border-stone-200 mx-4"></div>
+                  <span className="text-base font-semibold text-black/80">₾{item.price.toFixed(2)}</span>
+                </div>
+                <p className="text-sm text-black/50 pr-4 flex-grow">
+                  {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
+                </p>
               </div>
-              <p className="text-sm text-black/50 pr-4">
-                {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
-              </p>
-          </div>
-        ))}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 
 export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, config, menuItems }) => {
