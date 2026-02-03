@@ -1,3 +1,4 @@
+// FIX: Removed '/// <reference types="vite/client" />' as it was causing a "Cannot find type definition file" error.
 import React, { useState, useEffect } from 'react';
 import { Language, Page, MenuItem, BusinessConfig } from './types';
 import { HomePage } from './HomePage';
@@ -48,7 +49,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const handleLocationChange = () => {
       const path = window.location.pathname;
-      // FIX: Removed the vite/client triple-slash directive that was causing a type error. As a workaround for `import.meta.env`, `import.meta` is cast to `any` to allow compilation. Vite will handle the replacement at build time.
+      // FIX: Use type assertion to access 'import.meta.env' since Vite's client types are not available.
       const base = (import.meta as any).env.BASE_URL || '/';
       // Check if the path, relative to the base, starts with 'menu'
       if (path.startsWith(base) && path.substring(base.length).startsWith('menu')) {
@@ -68,7 +69,7 @@ const App: React.FC = () => {
 
   const navigate = (newPage: Page) => {
     const currentPath = window.location.pathname;
-    // FIX: Cast `import.meta` to `any` as a workaround for the removed `vite/client` types.
+    // FIX: Use type assertion to access 'import.meta.env' since Vite's client types are not available.
     const base = (import.meta as any).env.BASE_URL || '/';
     const currentPage = (currentPath.startsWith(base) && currentPath.substring(base.length).startsWith('menu')) ? 'menu' : 'home';
 
