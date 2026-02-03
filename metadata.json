@@ -1,0 +1,7 @@
+{
+  "name": "საოჯახო სამზარეულო | Family Kitchen Tbilisi",
+  "description": "Premium minimalist website for a local Georgian family kitchen in Tbilisi. Serving authentic homemade food with modern aesthetics.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

@@ -1,0 +1,92 @@
+
+import { BusinessConfig, MenuItem, Language } from '../types';
+
+export const FALLBACK_BUSINESS_CONFIG: BusinessConfig = {
+  addressKa: "თბილისი, პეკინის გამზირი 15",
+  addressEn: "15 Pekini Ave, Tbilisi",
+  addressRu: "Тбилиси, проспект Пекина 15",
+  phone: "+995 551 51 55 11",
+  hours: {
+    open: "09:00",
+    close: "22:00"
+  },
+  deliveryLinks: {
+    glovo: "https://glovoapp.com/ge/en/tbilisi/saojakho-samzareulo-tbi/",
+    wolt: "https://wolt.com/ka/geo/tbilisi/restaurant/saojakho-samzareulo",
+    bolt: "https://food.bolt.eu/ka-GE/tbilisi/551-saojakho-samzareulo"
+  },
+  socials: {
+    instagram: "https://instagram.com",
+    whatsapp: "https://wa.me/995551515511"
+  }
+};
+
+export const FALLBACK_MENU_ITEMS: MenuItem[] = [
+  {
+    id: 'khachapuri_megrelian', nameKa: "მეგრული ხაჭაპური", nameEn: "Megrelian Khachapuri", nameRu: "Мегрельский хачапури", price: 18,
+    descriptionKa: "სახლური ყველით", descriptionEn: "With homemade cheese", descriptionRu: "С домашним сыром", category: "Main", isSpecial: true
+  },
+  {
+    id: 'khinkali_meat', nameKa: "ხინკალი ხორცით", nameEn: "Khinkali (Meat)", nameRu: "Хинкали с мясом", price: 12,
+    descriptionKa: "5 ცალი", descriptionEn: "5 pieces", descriptionRu: "5 штук", category: "Dumplings"
+  },
+  {
+    id: 'khinkali_cheese', nameKa: "ხინკალი ყველით", nameEn: "Khinkali (Cheese)", nameRu: "Хинкали с сыром", price: 13,
+    descriptionKa: "5 ცალი", descriptionEn: "5 pieces", descriptionRu: "5 штук", category: "Dumplings"
+  },
+  {
+    id: 'lobio', nameKa: "ლობიო", nameEn: "Lobio", nameRu: "Лобио", price: 9,
+    descriptionKa: "ტრადიციული", descriptionEn: "Traditional", descriptionRu: "Традиционное", category: "Soups"
+  }
+];
+
+export const FALLBACK_CATEGORIES = {
+  Main: { ka: "მთავარი", en: "Main", ru: "Основное" },
+  Dumplings: { ka: "ხინკალი", en: "Dumplings", ru: "Хинкали" },
+  Soups: { ka: "წვნიანები", en: "Soups", ru: "Супы" },
+};
+
+export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
+  KA: {
+    heroTitle: "საოჯახო სამზარეულო",
+    heroSubtitle: "სახლური გემოები",
+    menuButton: "მენიუ",
+    backButton: "უკან",
+    workingHours: "სამუშაო საათები",
+    deliveryTitle: "მიტანა",
+    address: "მისამართი",
+    hours: "სამუშაო საათები",
+    contact: "კონტაქტი",
+    openInMaps: "გახსენი რუკაზე",
+    all: "ყველა",
+    phoneLabel: "ტელეფონი"
+  },
+  EN: {
+    heroTitle: "Family Kitchen",
+    heroSubtitle: "Taste of Home",
+    menuButton: "Menu",
+    backButton: "Back",
+    workingHours: "Working Hours",
+    deliveryTitle: "Delivery",
+    address: "Address",
+    hours: "Opening Hours",
+    contact: "Contact",
+    openInMaps: "Open in Maps",
+    all: "All",
+    phoneLabel: "Phone"
+  },
+  RU: {
+    heroTitle: "Семейная кухня",
+    heroSubtitle: "Домашний вкус",
+    menuButton: "Меню",
+    backButton: "Назад",
+    workingHours: "Часы работы",
+    deliveryTitle: "Доставка",
+    address: "Адрес",
+    hours: "Часы работы",
+    contact: "Контакт",
+    openInMaps: "Открыть на карте",
+    all: "Все",
+    phoneLabel: "Телефон"
+  }
+};
