@@ -81,8 +81,7 @@ const SpecialOffers: React.FC<{
   t: (key: string) => string; 
   onNavigateToMenu: (category?: string) => void;
   onItemSelect: (item: MenuItem) => void;
-  config: BusinessConfig;
-}> = ({ items, lang, t, onNavigateToMenu, onItemSelect, config }) => {
+}> = ({ items, lang, t, onNavigateToMenu, onItemSelect }) => {
   const FALLBACK_IMAGE_URL = 'https://images.unsplash.com/photo-1565895405138-6c3a1555da6a?q=80&w=1800&auto=format&fit=crop';
 
   return (
@@ -185,7 +184,6 @@ export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, c
              t={t} 
              onNavigateToMenu={(category) => setPage('menu', category)}
              onItemSelect={onItemSelect}
-             config={config}
           />
         )}
 
