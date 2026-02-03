@@ -86,7 +86,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, c
             <div className="lg:w-1/2 w-full h-96 lg:h-[500px] rounded-lg overflow-hidden shadow-2xl">
               <iframe 
                 title="Google Maps"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2977.369552492564!2d44.7841689!3d41.7341212!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x404472c0f8d62045%3A0x481a3b172fed7cf!2z0KHQtdC80LXQudC90LDRjyDQutGD0YXQvdGP!5e0!3m2!1sru!2sge!4v1770123757368!5m2!1sru!2sge"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2978.140884587424!2d44.77271737671375!3d41.71746407127627!2m3!1f0!2f0!3f0!3m2!1i1024!i768!4f13.1!3m3!1m2!1s0x404472d4ecf55555%3A0x6734c562e841804b!2s15%20Pekini%20Ave%2C%20Tbilisi%200160!5e0!3m2!1sen!2sge!4v1719500000000!5m2!1sen!2sge"
                 className="w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-500"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

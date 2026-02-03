@@ -9,7 +9,6 @@ import { FALLBACK_BUSINESS_CONFIG, FALLBACK_MENU_ITEMS, FALLBACK_CATEGORIES, FAL
 // Define a type for all fetched data
 interface AppData {
   menu: MenuItem[];
-  categories: any;
   config: BusinessConfig;
   translations: Record<Language, Record<string, string>>;
 }
@@ -24,20 +23,27 @@ const App: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [{ menu, categories }, config, translations] = await Promise.all([
+        const [{ menu }, config, translations] = await Promise.all([
           fetchMenuData(),
           fetchBusinessConfig(),
           fetchTranslations()
         ]);
-        setData({ menu, categories, config, translations });
+        setData({ menu, config, translations });
         setUsingFallback(false);
       } catch (err) {
         console.warn("Could not load live data from Google Sheets. Using local fallback data.", err);
+        // In fallback mode, we also need to merge category translations into the main translations object
+        const mergedTranslations = { ...FALLBACK_TRANSLATIONS };
+        for (const langKey in mergedTranslations) {
+          for (const catKey in FALLBACK_CATEGORIES) {
+             mergedTranslations[langKey as Language][catKey] = FALLBACK_CATEGORIES[catKey][langKey as Language];
+          }
+        }
+
         setData({
           menu: FALLBACK_MENU_ITEMS,
-          categories: FALLBACK_CATEGORIES,
           config: FALLBACK_BUSINESS_CONFIG,
-          translations: FALLBACK_TRANSLATIONS,
+          translations: mergedTranslations,
         });
         setUsingFallback(true);
       }
@@ -111,7 +117,6 @@ const App: React.FC = () => {
           setLang={setLang} 
           t={t} 
           menuItems={data.menu} 
-          categories={data.categories} 
           config={data.config}
         />
       )}

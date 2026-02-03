@@ -8,7 +8,6 @@ type MenuPageProps = {
   setLang: (lang: Language) => void;
   t: (key: string) => string;
   menuItems: MenuItem[];
-  categories: any;
   config: BusinessConfig;
 };
 
@@ -39,9 +38,11 @@ const MenuNavbar: React.FC<{ setPage: (page: Page) => void; lang: Language; setL
   </header>
 );
 
-export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, menuItems, categories, config }) => {
+export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, menuItems, config }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
-  const categoryKeys = Object.keys(categories);
+  
+  // Derive unique, sorted category keys directly from the menu items
+  const categoryKeys = Array.from(new Set(menuItems.map(item => item.category))).sort();
 
   const filteredItems = activeCategory === 'all'
     ? menuItems
@@ -71,7 +72,7 @@ export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, m
                   onClick={() => setActiveCategory(catKey)}
                   className={`w-full text-left text-sm font-semibold p-3 rounded-md transition-colors ${activeCategory === catKey ? 'bg-[var(--text-dark)] text-white' : 'hover:bg-stone-200'}`}
                 >
-                  {categories[catKey]?.[lang] || catKey}
+                  {t(catKey)}
                 </button>
               ))}
             </nav>
