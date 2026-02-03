@@ -35,8 +35,10 @@ const App: React.FC = () => {
         // In fallback mode, we also need to merge category translations into the main translations object
         const mergedTranslations = { ...FALLBACK_TRANSLATIONS };
         for (const langKey in mergedTranslations) {
+          const lang = langKey as Language;
+          const lowerLang = lang.toLowerCase() as 'ka' | 'en' | 'ru';
           for (const catKey in FALLBACK_CATEGORIES) {
-             mergedTranslations[langKey as Language][catKey] = FALLBACK_CATEGORIES[catKey][langKey as Language];
+             mergedTranslations[lang][catKey] = FALLBACK_CATEGORIES[catKey][lowerLang];
           }
         }
 

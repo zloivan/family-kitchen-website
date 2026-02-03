@@ -40,7 +40,7 @@ export const FALLBACK_MENU_ITEMS: MenuItem[] = [
   }
 ];
 
-export const FALLBACK_CATEGORIES = {
+export const FALLBACK_CATEGORIES: { [key: string]: { ka: string, en: string, ru: string } } = {
   Main: { ka: "მთავარი", en: "Main", ru: "Основное" },
   Dumplings: { ka: "ხინკალი", en: "Dumplings", ru: "Хинкали" },
   Soups: { ka: "წვნიანები", en: "Soups", ru: "Супы" },
