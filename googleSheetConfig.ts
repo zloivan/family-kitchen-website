@@ -12,6 +12,6 @@
 
 export const GOOGLE_SHEET_URLS = {
   MENU: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSHbCBLTXJ3Kv4Ow3Brr8C6xeDDfPglyUJmo8qG878DFT1Bs95OWE2PAULmQr8g-kv4xUMq6e6GeNlN/pub?gid=0&single=true&output=tsv',
-  CONFIG: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vREc6ALITk_jCEmWr902ajv9EtThiFizGNGJeOHApA5WozqN7r58Z7lHHdd9ZjONgxZguTJmWa7J8Wp/pub?gid=0&single=true&output=tsv',
-  UI_TEXT: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQtU3Vnh3Y6xi4eywVdWpatpTAL2TJ7CdSwdNs2zLjO8w6YO-Tau_Sugk9p1Y3hh3mzSDbOMYZpvOg-/pub?gid=0&single=true&output=tsv',
+  CONFIG: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSHbCBLTXJ3Kv4Ow3Brr8C6xeDDfPglyUJmo8qG878DFT1Bs95OWE2PAULmQr8g-kv4xUMq6e6GeNlN/pub?gid=998226641&single=true&output=tsv',
+  UI_TEXT: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSHbCBLTXJ3Kv4Ow3Brr8C6xeDDfPglyUJmo8qG878DFT1Bs95OWE2PAULmQr8g-kv4xUMq6e6GeNlN/pub?gid=318302949&single=true&output=tsv',
 };

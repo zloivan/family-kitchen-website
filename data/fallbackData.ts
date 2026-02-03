@@ -2,18 +2,18 @@
 import { BusinessConfig, MenuItem, Language } from '../types';
 
 export const FALLBACK_BUSINESS_CONFIG: BusinessConfig = {
-  addressKa: "თბილისი, პეკინის გამზირი 15",
-  addressEn: "15 Pekini Ave, Tbilisi",
-  addressRu: "Тбилиси, проспект Пекина 15",
-  phone: "+995 551 51 55 11",
+  addressKa: "თბილისი, აკაკი წერეთლის პროსპექტი, 67",
+  addressEn: "Tbilisi, Akaki Tsereteli Avenue, 67",
+  addressRu: "Тбилиси, проспект Акакия Церетели, 67",
+  phone: "+995551515511",
   hours: {
     open: "09:00",
     close: "22:00"
   },
   deliveryLinks: {
     glovo: "https://glovoapp.com/ge/en/tbilisi/saojakho-samzareulo-tbi/",
-    wolt: "https://wolt.com/ka/geo/tbilisi/restaurant/saojakho-samzareulo",
-    bolt: "https://food.bolt.eu/ka-GE/tbilisi/551-saojakho-samzareulo"
+    wolt: "",
+    bolt: ""
   },
   socials: {
     instagram: "https://instagram.com",
