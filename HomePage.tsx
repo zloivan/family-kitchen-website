@@ -4,7 +4,7 @@ import { BusinessConfig, Language, MenuItem, Page } from './types';
 
 // FIX: Define HomePageProps type to resolve the "Cannot find name 'HomePageProps'" error.
 type HomePageProps = {
-  setPage: (page: Page) => void;
+  setPage: (page: Page, category?: string) => void;
   lang: Language;
   setLang: (lang: Language) => void;
   t: (key: string) => string;
@@ -74,7 +74,12 @@ const Navbar: React.FC<{ setPage: (page: Page) => void; lang: Language; setLang:
   </header>
 );
 
-const SpecialOffers: React.FC<{ items: MenuItem[]; lang: Language; t: (key: string) => string; }> = ({ items, lang, t }) => {
+const SpecialOffers: React.FC<{ 
+  items: MenuItem[]; 
+  lang: Language; 
+  t: (key: string) => string; 
+  onNavigateToMenu: (category?: string) => void;
+}> = ({ items, lang, t, onNavigateToMenu }) => {
   const FALLBACK_IMAGE_URL = 'https://images.unsplash.com/photo-1565895405138-6c3a1555da6a?q=80&w=1800&auto=format&fit=crop';
 
   return (
@@ -85,7 +90,12 @@ const SpecialOffers: React.FC<{ items: MenuItem[]; lang: Language; t: (key: stri
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {items.map(item => (
-            <div key={item.id} className="bg-stone-50 border border-stone-200 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col">
+            <button
+              key={item.id}
+              onClick={() => onNavigateToMenu(item.category)}
+              className="bg-stone-50 border border-stone-200 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col text-left group hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2"
+              aria-label={`View ${item.nameEn} in menu`}
+            >
               <img 
                 src={item.imageUrl || FALLBACK_IMAGE_URL} 
                 alt={lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
@@ -105,8 +115,16 @@ const SpecialOffers: React.FC<{ items: MenuItem[]; lang: Language; t: (key: stri
                   {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
                 </p>
               </div>
-            </div>
+            </button>
           ))}
+        </div>
+        <div className="text-center mt-16">
+          <button 
+            onClick={() => onNavigateToMenu()} 
+            className="bg-[var(--text-dark)] text-white px-12 py-5 text-[11px] font-bold tracking-[0.2em] uppercase transition-all hover:opacity-80 active:scale-95 shadow-lg"
+          >
+            {t('viewFullMenuButton')}
+          </button>
         </div>
       </div>
     </section>
@@ -151,7 +169,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, c
         
         {/* Special Offers Section - Conditionally Rendered */}
         {specialItems.length > 0 && (
-          <SpecialOffers items={specialItems} lang={lang} t={t} />
+          <SpecialOffers items={specialItems} lang={lang} t={t} onNavigateToMenu={(category) => setPage('menu', category)} />
         )}
 
         {/* Location Section */}

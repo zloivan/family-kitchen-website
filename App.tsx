@@ -1,5 +1,6 @@
 
 // FIX: Removed '/// <reference types="vite/client" />' as it was causing a "Cannot find type definition file" error.
+// FIX: Imported useState and useEffect from React to resolve "Cannot find name" errors.
 import React, { useState, useEffect } from 'react';
 import { Language, Page, MenuItem, BusinessConfig, MenuCategory } from './types';
 import { HomePage } from './HomePage';
@@ -20,6 +21,7 @@ const App: React.FC = () => {
   const [page, setPage] = useState<Page>('home');
   const [data, setData] = useState<AppData | null>(null);
   const [usingFallback, setUsingFallback] = useState<boolean>(false);
+  const [targetCategory, setTargetCategory] = useState<string | null>(null);
 
   // Data fetching logic
   useEffect(() => {
@@ -87,7 +89,11 @@ const App: React.FC = () => {
     return data?.translations[lang]?.[key] || key;
   };
 
-  const navigate = (newPage: Page) => {
+  const navigate = (newPage: Page, category?: string) => {
+    if (category) {
+      setTargetCategory(category);
+    }
+    
     const currentPath = window.location.pathname;
     // FIX: Use type assertion to access 'import.meta.env' since Vite's client types are not available.
     const base = (import.meta as any).env.BASE_URL || '/';
@@ -98,7 +104,11 @@ const App: React.FC = () => {
       const path = newPage === 'menu' ? `${base}menu` : base;
       window.history.pushState({ page: newPage }, '', path);
       setPage(newPage);
+    } else if (newPage === 'menu') {
+      // If already on menu page, just apply category filter
+      setPage('menu');
     }
+    
     window.scrollTo(0, 0);
   };
   
@@ -134,6 +144,8 @@ const App: React.FC = () => {
           menuItems={data.menu} 
           categories={data.categories}
           config={data.config}
+          targetCategory={targetCategory}
+          setTargetCategory={setTargetCategory}
         />
       )}
     </div>

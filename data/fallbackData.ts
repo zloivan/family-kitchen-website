@@ -64,7 +64,8 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     all: "ყველა",
     phoneLabel: "ტელეფონი",
     socials: "სოციალური ქსელები",
-    specialOffersTitle: "განსაკუთრებული შეთავაზებები"
+    specialOffersTitle: "განსაკუთრებული შეთავაზებები",
+    viewFullMenuButton: "მთლიანი მენიუს ნახვა"
   },
   EN: {
     heroTitle: "Family Kitchen",
@@ -80,7 +81,8 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     all: "All",
     phoneLabel: "Phone",
     socials: "Socials",
-    specialOffersTitle: "Special Offers"
+    specialOffersTitle: "Special Offers",
+    viewFullMenuButton: "View Full Menu"
   },
   RU: {
     heroTitle: "Семейная кухня",
@@ -96,6 +98,7 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     all: "Все",
     phoneLabel: "Телефон",
     socials: "Социальные сети",
-    specialOffersTitle: "Специальные предложения"
+    specialOffersTitle: "Специальные предложения",
+    viewFullMenuButton: "Посмотреть полное меню"
   }
 };

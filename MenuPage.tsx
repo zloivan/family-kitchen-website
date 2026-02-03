@@ -1,15 +1,17 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { BusinessConfig, Language, MenuCategory, MenuItem, Page } from './types';
 
 type MenuPageProps = {
-  setPage: (page: Page) => void;
+  setPage: (page: Page, category?: string) => void;
   lang: Language;
   setLang: (lang: Language) => void;
   t: (key: string) => string;
   menuItems: MenuItem[];
   categories: MenuCategory[];
   config: BusinessConfig;
+  targetCategory: string | null;
+  setTargetCategory: (category: string | null) => void;
 };
 
 // Social Icons Component for the Menu Page Footer
@@ -60,8 +62,16 @@ const MenuNavbar: React.FC<{ setPage: (page: Page) => void; lang: Language; setL
   </header>
 );
 
-export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, menuItems, categories, config }) => {
+export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, menuItems, categories, config, targetCategory, setTargetCategory }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  
+  useEffect(() => {
+    if (targetCategory) {
+      setActiveCategory(targetCategory);
+      // Consume the target category so it doesn't re-trigger on subsequent renders
+      setTargetCategory(null);
+    }
+  }, [targetCategory, setTargetCategory]);
   
   const sortedCategories = useMemo(() => {
     // If categories are provided, sort them by the specified order.
