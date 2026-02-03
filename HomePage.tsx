@@ -18,17 +18,17 @@ const SocialIcons: React.FC<{ config: BusinessConfig; className?: string }> = ({
   <div className={`flex items-center gap-6 ${className}`}>
     {config.socials.instagram && (
       <a href={config.socials.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:opacity-70 transition-opacity">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
       </a>
     )}
     {config.socials.whatsapp && (
       <a href={config.socials.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="hover:opacity-70 transition-opacity">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.398 1.908 6.161l.119.198-1.015 3.698 3.797-1.045.166.096z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="currentColor" stroke="none"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.398 1.908 6.161l.119.198-1.015 3.698 3.797-1.045.166.096z"></path></svg>
       </a>
     )}
     {config.socials.facebook && (
       <a href={config.socials.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:opacity-70 transition-opacity">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="currentColor" stroke="none"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
       </a>
     )}
   </div>
@@ -75,21 +75,6 @@ const Navbar: React.FC<{ setPage: (page: Page) => void; lang: Language; setLang:
   </header>
 );
 
-const deliveryServicesConfig = {
-  glovo: {
-    icon: () => <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.3,4.9C9.7,5.3,7.6,7,6.3,9.2C5.9,10,5.7,11,5.7,12c0,0.5,0.1,1,0.2,1.5c0.1,0.5,0.2,0.9,0.4,1.3 c0.2,0.4,0.4,0.8,0.7,1.2c0.3,0.4,0.6,0.7,1,1.1c0.8,0.7,1.6,1.2,2.5,1.6c0.9,0.4,1.8,0.6,2.8,0.6c2.8,0,5.3-1.2,7.1-3.4 c0.3-0.4,0.5-0.8,0.7-1.2c0.2-0.4,0.3-0.9,0.4-1.4c0.1-0.5,0.1-1,0.1-1.5c0-2.8-1.5-5.2-3.8-6.5C16.5,4.2,15.1,4,13.7,4 C13.2,4,12.8,4.1,12.3,4.2C12.3,4.5,12.3,4.7,12.3,4.9z"/></svg>,
-    classes: "bg-yellow-100 text-yellow-500 hover:bg-yellow-400 hover:text-white"
-  },
-  wolt: {
-    icon: () => <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.3,18.3l-2.4-7.5l-3.3,7.5H5.4l5.5-12.5h2.1l5.5,12.5H15.3z"/></svg>,
-    classes: "bg-blue-100 text-blue-500 hover:bg-blue-500 hover:text-white"
-  },
-  bolt: {
-    icon: () => <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13,3v7.4l6.5-6.6L13,3z M11,21v-7.4L4.5,20.2L11,21z M12,12.5V8.2l-4.5,4.6L12,12.5z M12,13.5v4.3 l4.5-4.6L12,13.5z"/></svg>,
-    classes: "bg-green-100 text-green-500 hover:bg-green-500 hover:text-white"
-  }
-};
-
 const SpecialOffers: React.FC<{ 
   items: MenuItem[]; 
   lang: Language; 
@@ -107,62 +92,41 @@ const SpecialOffers: React.FC<{
           <h2 className="text-5xl md:text-7xl serif mb-12">{t('specialOffersTitle')}</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {items.map(item => {
-            const availableServices = (['glovo', 'wolt', 'bolt'] as const).map(key => {
-              const itemSpecificLink = item[`${key}Link` as keyof MenuItem] as string | undefined;
-              const generalLink = config.deliveryLinks[key];
-              const url = itemSpecificLink || generalLink;
-              return { key, url, ...deliveryServicesConfig[key] };
-            }).filter(service => service.url);
-
-            return (
-              <div
-                key={item.id}
-                className="bg-stone-50 border border-stone-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group"
-              >
-                <button
-                  onClick={() => onItemSelect(item)}
-                  className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 rounded-t-lg"
-                  aria-label={`View details for ${item.nameEn}`}
-                >
-                  <img 
-                    src={item.imageUrl || FALLBACK_IMAGE_URL} 
-                    alt={lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
-                    className="w-full h-56 object-cover"
-                    loading="lazy"
-                  />
-                  <div className="p-6">
-                    <div className="flex justify-between items-baseline mb-3">
-                      <h4 className="text-xl font-semibold tracking-tight flex items-center gap-3">
-                        {lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
-                        <span className="text-yellow-500">★</span>
-                      </h4>
-                      <div className="flex-grow border-b border-dashed border-stone-200 mx-4"></div>
-                      <span className="text-base font-semibold text-black/80">₾{item.price.toFixed(2)}</span>
-                    </div>
-                    <p className="text-sm text-black/50 pr-4">
-                      {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
-                    </p>
+          {items.map(item => (
+            <button
+              key={item.id}
+              onClick={() => onItemSelect(item)}
+              className="bg-stone-50 border border-stone-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2"
+              aria-label={`View details for ${item.nameEn}`}
+            >
+              <div className="flex-grow"> {/* Content wrapper */}
+                <img 
+                  src={item.imageUrl || FALLBACK_IMAGE_URL} 
+                  alt={lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
+                  className="w-full h-56 object-cover"
+                  loading="lazy"
+                />
+                <div className="p-6">
+                  <div className="flex justify-between items-baseline mb-3">
+                    <h4 className="text-xl font-semibold tracking-tight flex items-center gap-3">
+                      {lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
+                      <span className="text-yellow-500">★</span>
+                    </h4>
+                    <div className="flex-grow border-b border-dashed border-stone-200 mx-4"></div>
+                    <span className="text-base font-semibold text-black/80">₾{item.price.toFixed(2)}</span>
                   </div>
-                </button>
-                <div className="mt-auto px-6 pb-4 flex justify-end gap-2">
-                  {availableServices.map(service => (
-                    <a
-                      key={service.key}
-                      href={service.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`h-9 w-9 flex items-center justify-center rounded-md transition-all duration-300 ${service.classes}`}
-                      aria-label={`Order on ${service.key}`}
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <div className="w-5 h-5">{service.icon()}</div>
-                    </a>
-                  ))}
+                  <p className="text-sm text-black/50 pr-4">
+                    {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
+                  </p>
                 </div>
               </div>
-            );
-          })}
+              <div className="px-6 pb-6 pt-2"> {/* Fake button wrapper */}
+                <div className="w-full bg-[var(--accent-primary)] text-white text-center px-4 py-3 text-xs font-bold tracking-widest uppercase transition-colors group-hover:bg-red-800 rounded-md shadow">
+                  {t('orderNowButton')}
+                </div>
+              </div>
+            </button>
+          ))}
         </div>
         <div className="text-center mt-16">
           <button 
@@ -197,7 +161,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, c
         {/* Hero Section */}
         <section className="relative h-screen bg-black/40 text-white flex flex-col items-center justify-center text-center px-6">
           <div className="absolute inset-0 z-[-1]">
-             <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=3000&auto=format&fit=crop" alt="Delicious food preparation" className="w-full h-full object-cover"/>
+             <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=3000&auto-format&fit=crop" alt="Delicious food preparation" className="w-full h-full object-cover"/>
           </div>
           <div className="z-10 fade-in-up">
             <h1 className="text-6xl md:text-8xl lg:text-[10rem] serif mb-4 leading-[0.9] tracking-tight drop-shadow-xl">{t('heroTitle')}</h1>
