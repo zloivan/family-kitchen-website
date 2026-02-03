@@ -54,6 +54,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({ item, onClose, lang, t, 
   }, [item, config]);
 
   const itemName = lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu;
+  const itemDescription = lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu;
 
   return (
     <div 
@@ -83,7 +84,13 @@ export const OrderModal: React.FC<OrderModalProps> = ({ item, onClose, lang, t, 
         </div>
         <div className="p-8 text-center">
           <h3 id="order-modal-title" className="serif text-3xl mb-1 text-[var(--text-dark)]">{itemName}</h3>
-          <p className="text-xl font-semibold text-[var(--accent-primary)] mb-6">₾{item.price.toFixed(2)}</p>
+          <p className="text-xl font-semibold text-[var(--accent-primary)] mb-4">₾{item.price.toFixed(2)}</p>
+
+          {itemDescription && (
+             <p className="text-sm text-black/60 mb-6 max-w-xs mx-auto">
+               {itemDescription}
+             </p>
+          )}
 
           <p className="text-sm font-semibold tracking-widest uppercase text-black/40 mb-4">{t('chooseDeliveryService')}</p>
           
