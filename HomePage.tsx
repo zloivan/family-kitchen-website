@@ -167,12 +167,12 @@ export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, c
       <Navbar setPage={setPage} lang={lang} setLang={setLang} t={t} isScrolled={isScrolled} />
       <main>
         {/* Hero Section */}
-        <section className="relative h-screen bg-black/40 text-white flex flex-col items-center justify-center text-center px-6">
+        <section className="relative h-screen bg-black/40 text-white flex flex-col items-center justify-center text-center px-6 overflow-hidden">
           <div className="absolute inset-0 z-[-1]">
              <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=3000&auto-format&fit=crop" alt="Delicious food preparation" className="w-full h-full object-cover"/>
           </div>
           <div className="z-10 fade-in-up">
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] serif mb-4 leading-[0.9] tracking-tight drop-shadow-xl">{t('heroTitle')}</h1>
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] serif mb-4 leading-[0.9] tracking-tight drop-shadow-xl break-words">{t('heroTitle')}</h1>
             <p className="text-lg md:text-2xl font-light tracking-widest opacity-90 drop-shadow-lg">{t('heroSubtitle')}</p>
             <div className="flex flex-col sm:flex-row gap-5 justify-center items-center mt-12">
               <button onClick={() => setPage('menu')} className="w-full sm:w-auto bg-[var(--accent-primary)] text-white px-12 py-5 text-[11px] font-bold tracking-[0.2em] uppercase transition-all hover:bg-red-800 active:scale-95 shadow-lg">
