@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Language, Page, MenuItem, BusinessConfig, MenuCategory } from './types';
 import { HomePage } from './HomePage';
 import { MenuPage } from './MenuPage';
+import { OrderModal } from './OrderModal'; // Import the new modal component
 import { fetchBusinessConfig, fetchCategories, fetchMenuData, fetchTranslations } from './services/googleSheetsService';
 import { FALLBACK_BUSINESS_CONFIG, FALLBACK_MENU_ITEMS, FALLBACK_CATEGORIES_LIST, FALLBACK_TRANSLATIONS } from './data/fallbackData';
 
@@ -22,6 +23,7 @@ const App: React.FC = () => {
   const [data, setData] = useState<AppData | null>(null);
   const [usingFallback, setUsingFallback] = useState<boolean>(false);
   const [targetCategory, setTargetCategory] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
 
   // Data fetching logic
   useEffect(() => {
@@ -133,6 +135,7 @@ const App: React.FC = () => {
           t={t} 
           config={data.config}
           menuItems={data.menu}
+          onItemSelect={setSelectedItem}
         />
       )}
       {page === 'menu' && (
@@ -146,6 +149,17 @@ const App: React.FC = () => {
           config={data.config}
           targetCategory={targetCategory}
           setTargetCategory={setTargetCategory}
+          onItemSelect={setSelectedItem}
+        />
+      )}
+      
+      {selectedItem && (
+        <OrderModal 
+          item={selectedItem}
+          onClose={() => setSelectedItem(null)}
+          lang={lang}
+          t={t}
+          config={data.config}
         />
       )}
     </div>

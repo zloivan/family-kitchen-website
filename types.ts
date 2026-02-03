@@ -15,6 +15,10 @@ export interface MenuItem {
   category: string;
   isSpecial?: boolean;
   imageUrl?: string;
+  // Add item-specific delivery links
+  glovoLink?: string;
+  woltLink?: string;
+  boltLink?: string;
 }
 
 export interface MenuCategory {

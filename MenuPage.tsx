@@ -12,6 +12,7 @@ type MenuPageProps = {
   config: BusinessConfig;
   targetCategory: string | null;
   setTargetCategory: (category: string | null) => void;
+  onItemSelect: (item: MenuItem) => void;
 };
 
 // Social Icons Component for the Menu Page Footer
@@ -62,7 +63,7 @@ const MenuNavbar: React.FC<{ setPage: (page: Page) => void; lang: Language; setL
   </header>
 );
 
-export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, menuItems, categories, config, targetCategory, setTargetCategory }) => {
+export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, menuItems, categories, config, targetCategory, setTargetCategory, onItemSelect }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   
   useEffect(() => {
@@ -125,7 +126,12 @@ export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, m
           <main className="w-full md:w-3/4 lg:w-4/5">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-10">
               {filteredItems.map(item => (
-                <div key={item.id} className="group">
+                <button 
+                  key={item.id} 
+                  className="group text-left p-2 -m-2 rounded-lg hover:bg-stone-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] transition-colors"
+                  onClick={() => onItemSelect(item)}
+                  aria-label={`Order ${item.nameEn}`}
+                >
                   <div className="flex justify-between items-baseline mb-2">
                     <h4 className="text-xl font-semibold tracking-tight flex items-center gap-3">
                       {lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
@@ -137,7 +143,7 @@ export const MenuPage: React.FC<MenuPageProps> = ({ setPage, lang, setLang, t, m
                   <p className="text-sm text-black/50 pr-4">
                     {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
                   </p>
-                </div>
+                </button>
               ))}
             </div>
           </main>

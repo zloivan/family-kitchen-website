@@ -12,8 +12,8 @@ export const FALLBACK_BUSINESS_CONFIG: BusinessConfig = {
   },
   deliveryLinks: {
     glovo: "https://glovoapp.com/ge/en/tbilisi/saojakho-samzareulo-tbi/",
-    wolt: "",
-    bolt: ""
+    wolt: "https://wolt.com/en/geo/tbilisi/restaurant/saojakho-samzareulo",
+    bolt: "https://food.bolt.eu/en-US/137/tbilisi/25011"
   },
   socials: {
     instagram: "https://instagram.com",
@@ -65,7 +65,10 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     phoneLabel: "ტელეფონი",
     socials: "სოციალური ქსელები",
     specialOffersTitle: "განსაკუთრებული შეთავაზებები",
-    viewFullMenuButton: "მთლიანი მენიუს ნახვა"
+    viewFullMenuButton: "მთლიანი მენიუს ნახვა",
+    chooseDeliveryService: "აირჩიეთ მიტანის სერვისი",
+    orderOn: "შეუკვეთე",
+    closeButton: "დახურვა"
   },
   EN: {
     heroTitle: "Family Kitchen",
@@ -82,7 +85,10 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     phoneLabel: "Phone",
     socials: "Socials",
     specialOffersTitle: "Special Offers",
-    viewFullMenuButton: "View Full Menu"
+    viewFullMenuButton: "View Full Menu",
+    chooseDeliveryService: "Choose a delivery service",
+    orderOn: "Order on",
+    closeButton: "Close"
   },
   RU: {
     heroTitle: "Семейная кухня",
@@ -99,6 +105,9 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     phoneLabel: "Телефон",
     socials: "Социальные сети",
     specialOffersTitle: "Специальные предложения",
-    viewFullMenuButton: "Посмотреть полное меню"
+    viewFullMenuButton: "Посмотреть полное меню",
+    chooseDeliveryService: "Выберите сервис доставки",
+    orderOn: "Заказать на",
+    closeButton: "Закрыть"
   }
 };

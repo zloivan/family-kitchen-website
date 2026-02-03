@@ -10,6 +10,7 @@ type HomePageProps = {
   t: (key: string) => string;
   config: BusinessConfig;
   menuItems: MenuItem[];
+  onItemSelect: (item: MenuItem) => void;
 };
 
 // Social Icons Component for cleaner rendering
@@ -79,7 +80,8 @@ const SpecialOffers: React.FC<{
   lang: Language; 
   t: (key: string) => string; 
   onNavigateToMenu: (category?: string) => void;
-}> = ({ items, lang, t, onNavigateToMenu }) => {
+  onItemSelect: (item: MenuItem) => void;
+}> = ({ items, lang, t, onNavigateToMenu, onItemSelect }) => {
   const FALLBACK_IMAGE_URL = 'https://images.unsplash.com/photo-1565895405138-6c3a1555da6a?q=80&w=1800&auto=format&fit=crop';
 
   return (
@@ -92,9 +94,9 @@ const SpecialOffers: React.FC<{
           {items.map(item => (
             <button
               key={item.id}
-              onClick={() => onNavigateToMenu(item.category)}
+              onClick={() => onItemSelect(item)}
               className="bg-stone-50 border border-stone-200 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col text-left group hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2"
-              aria-label={`View ${item.nameEn} in menu`}
+              aria-label={`Order ${item.nameEn}`}
             >
               <img 
                 src={item.imageUrl || FALLBACK_IMAGE_URL} 
@@ -132,7 +134,7 @@ const SpecialOffers: React.FC<{
 };
 
 
-export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, config, menuItems }) => {
+export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, config, menuItems, onItemSelect }) => {
   const [isScrolled, setIsScrolled] = React.useState(false);
   
   const specialItems = useMemo(() => menuItems.filter(item => item.isSpecial), [menuItems]);
@@ -169,7 +171,13 @@ export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, c
         
         {/* Special Offers Section - Conditionally Rendered */}
         {specialItems.length > 0 && (
-          <SpecialOffers items={specialItems} lang={lang} t={t} onNavigateToMenu={(category) => setPage('menu', category)} />
+          <SpecialOffers 
+             items={specialItems} 
+             lang={lang} 
+             t={t} 
+             onNavigateToMenu={(category) => setPage('menu', category)}
+             onItemSelect={onItemSelect}
+          />
         )}
 
         {/* Location Section */}
@@ -202,7 +210,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, c
             <div className="lg:w-1/2 w-full h-96 lg:h-[500px] rounded-lg overflow-hidden shadow-2xl">
               <iframe 
                 title="Google Maps"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d744.3446073445333!2d44.7843108!3d41.7339297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x404472c0f8d62045%3A0x481a3b172fed7cf!2z0KHQtdC80LXQudC90LDRjyDQutGD0YXQvdGP!5e0!3m2!1sru!2sge!4v1770134000810!5m2!1sru!2sge"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d744.3446073445333!2d44.7843108!3d41.7339297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!_x404472c0f8d62045%3A0x481a3b172fed7cf!2z0KHQtdC80LXQudC90LDRjyDQutGD0YXQvdGP!5e0!3m2!1sru!2sge!4v1770134000810!5m2!1sru!2sge"
                 className="w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-500"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
