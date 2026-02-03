@@ -6,7 +6,7 @@
 // 2. For EACH tab, go to 'File > Share > Publish to web'.
 // 3. Select the tab, choose 'Tab-separated values (.tsv)', and click 'Publish'.
 // 4. Copy the generated URL and paste it below, replacing the placeholder.
-// test
+//
 // The site will use local data until these URLs are correctly configured.
 // =================================================================================
 
