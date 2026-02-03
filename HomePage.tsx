@@ -95,7 +95,7 @@ const SpecialOffers: React.FC<{
             <button
               key={item.id}
               onClick={() => onItemSelect(item)}
-              className="bg-stone-50 border border-stone-200 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col text-left group hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2"
+              className="bg-stone-50 border border-stone-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2"
               aria-label={`Order ${item.nameEn}`}
             >
               <img 
@@ -113,9 +113,14 @@ const SpecialOffers: React.FC<{
                   <div className="flex-grow border-b border-dashed border-stone-200 mx-4"></div>
                   <span className="text-base font-semibold text-black/80">₾{item.price.toFixed(2)}</span>
                 </div>
-                <p className="text-sm text-black/50 pr-4 flex-grow">
+                <p className="text-sm text-black/50 pr-4 flex-grow mb-4">
                   {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
                 </p>
+                <div className="mt-auto pt-4">
+                  <span className="inline-block bg-[var(--accent-primary)] text-white px-6 py-2 text-[10px] font-bold tracking-widest uppercase rounded-sm group-hover:bg-red-800 transition-colors duration-300">
+                    {t('orderNowButton')}
+                  </span>
+                </div>
               </div>
             </button>
           ))}
