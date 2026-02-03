@@ -37,7 +37,7 @@ export const FALLBACK_MENU_ITEMS: MenuItem[] = [
   },
   {
     id: 'lobio', nameKa: "ლობიო", nameEn: "Lobio", nameRu: "Лобио", price: 9,
-    descriptionKa: "ტრადიციული", descriptionEn: "Traditional", descriptionRu: "Традиционное", category: "Soups"
+    descriptionKa: "ტრადიციული", descriptionEn: "Traditional", descriptionRu: "Традиционное", category: "Soups", isSpecial: true
   }
 ];
 
@@ -61,7 +61,8 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     openInMaps: "გახსენი რუკაზე",
     all: "ყველა",
     phoneLabel: "ტელეფონი",
-    socials: "სოციალური ქსელები"
+    socials: "სოციალური ქსელები",
+    specialOffersTitle: "განსაკუთრებული შეთავაზებები"
   },
   EN: {
     heroTitle: "Family Kitchen",
@@ -76,7 +77,8 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     openInMaps: "Open in Maps",
     all: "All",
     phoneLabel: "Phone",
-    socials: "Socials"
+    socials: "Socials",
+    specialOffersTitle: "Special Offers"
   },
   RU: {
     heroTitle: "Семейная кухня",
@@ -91,6 +93,7 @@ export const FALLBACK_TRANSLATIONS: Record<Language, Record<string, string>> = {
     openInMaps: "Открыть на карте",
     all: "Все",
     phoneLabel: "Телефон",
-    socials: "Социальные сети"
+    socials: "Социальные сети",
+    specialOffersTitle: "Специальные предложения"
   }
 };

@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { BusinessConfig, Language, Page } from './types';
+import React, { useMemo } from 'react';
+import { BusinessConfig, Language, MenuItem, Page } from './types';
 
 // FIX: Define HomePageProps type to resolve the "Cannot find name 'HomePageProps'" error.
 type HomePageProps = {
@@ -9,6 +9,7 @@ type HomePageProps = {
   setLang: (lang: Language) => void;
   t: (key: string) => string;
   config: BusinessConfig;
+  menuItems: MenuItem[];
 };
 
 // Social Icons Component for cleaner rendering
@@ -73,8 +74,38 @@ const Navbar: React.FC<{ setPage: (page: Page) => void; lang: Language; setLang:
   </header>
 );
 
-export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, config }) => {
+const SpecialOffers: React.FC<{ items: MenuItem[]; lang: Language; t: (key: string) => string; }> = ({ items, lang, t }) => (
+  <section className="py-24 md:py-32 px-6 bg-white">
+    <div className="max-w-6xl mx-auto">
+      <div className="text-center">
+        <h2 className="text-5xl md:text-7xl serif mb-12">{t('specialOffersTitle')}</h2>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {items.map(item => (
+          <div key={item.id} className="bg-stone-50 border border-stone-200 rounded-lg p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
+             <div className="flex justify-between items-baseline mb-3">
+                <h4 className="text-xl font-semibold tracking-tight flex items-center gap-3">
+                  {lang === 'KA' ? item.nameKa : lang === 'EN' ? item.nameEn : item.nameRu}
+                  <span className="text-yellow-500">★</span>
+                </h4>
+                <div className="flex-grow border-b border-dashed border-stone-200 mx-4"></div>
+                <span className="text-base font-semibold text-black/80">₾{item.price.toFixed(2)}</span>
+              </div>
+              <p className="text-sm text-black/50 pr-4">
+                {lang === 'KA' ? item.descriptionKa : lang === 'EN' ? item.descriptionEn : item.descriptionRu}
+              </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+
+export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, config, menuItems }) => {
   const [isScrolled, setIsScrolled] = React.useState(false);
+  
+  const specialItems = useMemo(() => menuItems.filter(item => item.isSpecial), [menuItems]);
 
   React.useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -106,6 +137,11 @@ export const HomePage: React.FC<HomePageProps> = ({ setPage, lang, setLang, t, c
           </div>
         </section>
         
+        {/* Special Offers Section - Conditionally Rendered */}
+        {specialItems.length > 0 && (
+          <SpecialOffers items={specialItems} lang={lang} t={t} />
+        )}
+
         {/* Location Section */}
         <section id="location" className="py-24 md:py-40 px-6">
           <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-16 items-center">

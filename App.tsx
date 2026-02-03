@@ -121,7 +121,8 @@ const App: React.FC = () => {
           lang={lang} 
           setLang={setLang} 
           t={t} 
-          config={data.config} 
+          config={data.config}
+          menuItems={data.menu}
         />
       )}
       {page === 'menu' && (
