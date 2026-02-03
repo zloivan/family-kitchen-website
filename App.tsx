@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Language, Page, MenuItem, BusinessConfig } from './types';
 import { HomePage } from './HomePage';
@@ -20,10 +19,10 @@ const App: React.FC = () => {
   const [data, setData] = useState<AppData | null>(null);
   const [usingFallback, setUsingFallback] = useState<boolean>(false);
 
+  // Data fetching logic
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Attempt to fetch live data from Google Sheets
         const [{ menu, categories }, config, translations] = await Promise.all([
           fetchMenuData(),
           fetchBusinessConfig(),
@@ -32,7 +31,6 @@ const App: React.FC = () => {
         setData({ menu, categories, config, translations });
         setUsingFallback(false);
       } catch (err) {
-        // If fetching fails, log a warning and use local fallback data
         console.warn("Could not load live data from Google Sheets. Using local fallback data.", err);
         setData({
           menu: FALLBACK_MENU_ITEMS,
@@ -46,14 +44,40 @@ const App: React.FC = () => {
     loadData();
   }, []);
 
+  // Routing logic: handles initial load and browser back/forward buttons
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const path = window.location.pathname;
+      // FIX: Removed the vite/client triple-slash directive that was causing a type error. As a workaround for `import.meta.env`, `import.meta` is cast to `any` to allow compilation. Vite will handle the replacement at build time.
+      const base = (import.meta as any).env.BASE_URL || '/';
+      // Check if the path, relative to the base, starts with 'menu'
+      if (path.startsWith(base) && path.substring(base.length).startsWith('menu')) {
+          setPage('menu');
+      } else {
+          setPage('home');
+      }
+    };
+    handleLocationChange(); // Set page on initial load
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []); // Runs once on mount
+
   const t = (key: string): string => {
     return data?.translations[lang]?.[key] || key;
   };
 
   const navigate = (newPage: Page) => {
-    const path = newPage === 'menu' ? '/menu' : '/';
-    window.history.pushState({}, '', path);
-    setPage(newPage);
+    const currentPath = window.location.pathname;
+    // FIX: Cast `import.meta` to `any` as a workaround for the removed `vite/client` types.
+    const base = (import.meta as any).env.BASE_URL || '/';
+    const currentPage = (currentPath.startsWith(base) && currentPath.substring(base.length).startsWith('menu')) ? 'menu' : 'home';
+
+    if (newPage !== currentPage) {
+      // Use Vite's base URL to construct the correct path for sub-directories
+      const path = newPage === 'menu' ? `${base}menu` : base;
+      window.history.pushState({ page: newPage }, '', path);
+      setPage(newPage);
+    }
     window.scrollTo(0, 0);
   };
   
