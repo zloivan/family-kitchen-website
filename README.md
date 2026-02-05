@@ -1,48 +1,172 @@
-# Saojakho Samzareulo | Family Kitchen - Full Project Code
 
-This document contains the complete source code for the Family Kitchen website. All project files are included below for a comprehensive overview.
+# Техническая документация: Saojakho Samzareulo | Family Kitchen
 
-The application is a modern, minimalist website for a local Georgian family kitchen, designed to be easily managed by a non-technical business owner.
-
----
-
-## Key Features
-
-*   **Headless CMS via Google Sheets**: All website content (menu items, prices, business hours, UI text) is fetched live from a public Google Sheet. This allows the business owner to update the site from their phone or computer without any code changes.
-*   **Dynamic Content Loading**: The site fetches the latest content every time a user visits, ensuring that changes made in the Google Sheet are reflected automatically without needing to redeploy the application.
-*   **Robust Fallback System**: If the Google Sheets data cannot be loaded for any reason (e.g., network error, incorrect configuration), the application seamlessly falls back to a local copy of the data. This ensures the website is always online and functional.
-*   **Multi-language Support**: All text is managed in the CMS, supporting Georgian, English, and Russian.
-*   **Fully Responsive Design**: A clean, modern aesthetic that looks great on all devices.
-*   **Automated Deployments**: Using GitHub Actions, any change pushed to the `main` branch is automatically built and deployed to GitHub Pages.
+Этот документ представляет собой исчерпывающее техническое руководство по веб-приложению "Family Kitchen". Он описывает архитектуру, структуру файлов и подробно рассматривает каждый компонент, сервис и конфигурационный файл.
 
 ---
 
-## How to Deploy to GitHub Pages
+## 1. Ключевые архитектурные решения
 
-This project is configured for automated deployment to GitHub Pages.
+*   **Headless CMS через Google Sheets**: Весь контент (меню, настройки, тексты интерфейса) управляется через публичную Google Таблицу. Это позволяет владельцу бизнеса обновлять сайт без вмешательства разработчика.
+*   **Динамическая загрузка и отказоустойчивость**: Приложение при каждом запуске пытается загрузить актуальные данные из Google Sheets. Если загрузка не удалась (ошибка сети, неверный URL), оно автоматически переключается на локальные, "запасные" данные (`fallbackData.ts`), обеспечивая 100% доступность сайта.
+*   **"Single Page Application" (SPA)**: Приложение работает как SPA. Переключение между "страницами" (Home и Menu) происходит без перезагрузки, управляясь состоянием в React. URL в браузере меняется с помощью History API для удобства пользователей.
+*   **Компонентная архитектура**: Интерфейс разбит на переиспользуемые React-компоненты, что упрощает поддержку и разработку.
 
-### Step 1: Push to a New GitHub Repository
+---
 
-1.  **Create a Repository:** Create a new, public repository on your GitHub account (e.g., `family-kitchen-website`).
-2.  **Push the Code:** In your local project folder, run the following commands, replacing the URL with your repository's URL.
-    ```bash
-    git init
-    git add .
-    git commit -m "Initial commit"
-    git branch -M main
-    git remote add origin <YOUR_REPOSITORY_URL>
-    git push -u origin main
-    ```
+## 2. Структура проекта и описание файлов
 
-### Step 2: Configure GitHub Pages Settings
+Ниже представлен детальный разбор каждого файла в проекте.
 
-1.  In your new GitHub repository, go to **Settings > Pages**.
-2.  Under the "Build and deployment" section, change the **Source** to **"GitHub Actions"**.
+### `/index.html`
+**Назначение**: Главный и единственный HTML-файл, точка входа в приложение.
 
-### Step 3: Done!
+*   `<div id="root"></div>`: Корневой элемент, в который React монтирует все приложение.
+*   **Подключение шрифтов**: Загружает шрифты 'Playfair Display' (для заголовков) и 'Inter' (для основного текста) с Google Fonts.
+*   **Глобальные стили**: Содержит CSS-переменные (`--bg-main`, `--text-dark` и т.д.) и базовые стили для `body`, заголовков и анимаций.
+*   **Import Map**: Позволяет использовать "голые" импорты (`import React from 'react'`) прямо в браузере без сборщика, загружая модули с CDN `esm.sh`.
 
-The repository already contains a workflow file at `.github/workflows/deploy.yml`. The moment you push your code and configure the Pages source, GitHub Actions will automatically start building and deploying your site.
+### `/index.tsx`
+**Назначение**: Инициализация React-приложения.
 
-The first deployment may take a few minutes. You can monitor its progress in the **"Actions"** tab of your repository.
+*   Находит элемент `<div id="root">` в DOM.
+*   Использует `ReactDOM.createRoot()` для создания корневого элемента React.
+*   Рендерит главный компонент `<App />` внутри `<React.StrictMode>`, который помогает выявлять потенциальные проблемы в приложении.
 
-Your live site will be available at: `https://<your-username>.github.io/<repository-name>/`
+### `/types.ts`
+**Назначение**: Централизованное определение всех TypeScript-типов, используемых в проекте.
+
+*   `Language`: `'KA' | 'EN' | 'RU'` — возможные языки интерфейса.
+*   `Page`: `'home' | 'menu'` — возможные "страницы" приложения.
+*   `MenuItem`: Описывает структуру одного блюда в меню. Содержит поля для названий и описаний на трех языках, цену, категорию, флаг `isSpecial`, URL изображения и опциональные ссылки для доставки.
+*   `MenuCategory`: Описывает структуру категории меню, включая ключ, порядок сортировки и названия на трех языках.
+*   `BusinessConfig`: Описывает глобальные настройки бизнеса: адрес, телефон, часы работы, общие ссылки на доставку и соцсети.
+
+### `/App.tsx`
+**Назначение**: Корневой компонент, управляющий состоянием всего приложения.
+
+*   **Состояние (State):**
+    *   `lang` (`useState<Language>`): Текущий выбранный язык ('KA').
+    *   `page` (`useState<Page>`): Текущая активная страница ('home').
+    *   `data` (`useState<AppData | null>`): Хранит все загруженные данные (меню, конфиг, переводы, категории). `null` во время загрузки.
+    *   `usingFallback` (`useState<boolean>`): Флаг, указывающий, используются ли резервные данные.
+    *   `targetCategory` (`useState<string | null>`): Хранит ID категории, которую нужно открыть при переходе на страницу меню.
+    *   `selectedItem` (`useState<MenuItem | null>`): Хранит блюдо, выбранное для отображения в модальном окне заказа.
+
+*   **Жизненный цикл и логика:**
+    *   `useEffect(loadData, [])`: При первом рендере запускает асинхронную функцию `loadData`. Она пытается загрузить все данные из Google Sheets с помощью `Promise.all`. В случае успеха сохраняет их в `data`. В случае ошибки — логирует предупреждение и загружает резервные данные из `fallbackData.ts`, устанавливая флаг `usingFallback` в `true`.
+    *   `useEffect(handleLocationChange, [])`: При первом рендере и при навигации по истории браузера (`popstate`) анализирует `window.location.pathname` и устанавливает правильное состояние `page`. Это обеспечивает работу кнопок "назад/вперед" в браузере.
+    *   **Функция `t(key)`**: Функция для получения перевода. Принимает ключ (например, 'heroTitle') и возвращает строку на текущем языке (`lang`) из объекта `data.translations`.
+    *   **Функция `navigate(newPage, category?)`**: Управляет навигацией. С помощью `window.history.pushState` изменяет URL в браузере, устанавливает новую страницу в `page` и сбрасывает скролл наверх. Может принимать `category` для целевого перехода на страницу меню.
+
+*   **Рендеринг:**
+    *   Пока `data` равно `null`, отображает надпись "Loading Kitchen...".
+    *   Если `usingFallback` - `true`, показывает предупреждающий баннер.
+    *   В зависимости от значения `page`, рендерит либо `<HomePage />`, либо `<MenuPage />`.
+    *   Если `selectedItem` не `null`, рендерит модальное окно `<OrderModal />`.
+
+### `/HomePage.tsx`
+**Назначение**: Отображение главной страницы.
+
+*   **Props**: Принимает функции для навигации (`setPage`), управления языком (`setLang`), перевода (`t`), а также данные (`config`, `menuItems`) и колбэк `onItemSelect` для открытия модального окна.
+*   **Состояние (State):**
+    *   `isScrolled` (`useState<boolean>`): Отслеживает, проскроллена ли страница, чтобы изменять стиль навигационной панели.
+*   **Логика:**
+    *   `useMemo` используется для фильтрации только специальных предложений (`specialItems`) из общего списка меню.
+    *   `useEffect` подписывается на событие `scroll` для обновления состояния `isScrolled`.
+*   **Суб-компоненты:**
+    *   `SocialIcons`: Рендерит иконки соцсетей.
+    *   `LanguageToggle`: Переключатель языков. Меняет стиль в зависимости от прокрутки.
+    *   `Navbar`: Верхняя навигационная панель. Прозрачная вверху, меняет фон при прокрутке (`isScrolled`).
+    *   `SpecialOffers`: Секция с карточками специальных предложений. Рендерится, только если `specialItems` не пустой.
+*   **Структура рендеринга**:
+    1.  `<Navbar />`
+    2.  Секция "Hero" (первый экран с фоновым изображением и заголовком).
+    3.  `<SpecialOffers />`
+    4.  Секция "Location" с адресом, контактами и картой.
+    5.  `<footer>` с иконками соцсетей.
+
+### `/MenuPage.tsx`
+**Назначение**: Отображение страницы с меню.
+
+*   **Props**: Аналогичны `HomePage`, но дополнительно принимает список категорий (`categories`), `targetCategory` для целевого открытия, и `setTargetCategory` для сброса этого состояния.
+*   **Состояние (State):**
+    *   `activeCategory` (`useState<string>`): Хранит `key` текущей выбранной категории ('all' по умолчанию).
+*   **Логика:**
+    *   `useEffect`: Если был передан `targetCategory` (например, при клике на "Посмотреть все меню"), устанавливает его как `activeCategory` и сразу сбрасывает.
+    *   `useMemo` (`sortedCategories`): Сортирует категории согласно `sortOrder`, полученному из CMS.
+    *   `filteredItems`: Фильтрует массив `menuItems` на основе `activeCategory`.
+*   **Суб-компоненты:**
+    *   `FooterSocialIcons`: Иконки соцсетей для подвала.
+    *   `LanguageToggle`: Переключатель языков.
+    *   `MenuNavbar`: Навигационная панель с кнопкой "Назад".
+*   **Структура рендеринга**:
+    1.  `<MenuNavbar />`
+    2.  Заголовок "Меню".
+    3.  Двухколоночный макет:
+        *   Слева (`<aside>`): Навигация по категориям.
+        *   Справа (`<main>`): Сетка с отфильтрованными блюдами.
+    4.  `<footer>` с ссылками на сервисы доставки и соцсетями.
+
+### `/OrderModal.tsx`
+**Назначение**: Модальное окно для отображения деталей блюда и ссылок на заказ.
+
+*   **Props**: `item` (выбранное блюдо), `onClose` (функция для закрытия), `lang`, `t`, `config`.
+*   **Логика:**
+    *   `useEffect`: При монтировании компонента добавляет обработчик `Escape` для закрытия окна и блокирует прокрутку `body`. При размонтировании — убирает обработчик и возвращает прокрутку.
+    *   `useMemo` (`availableServices`): Фильтрует список сервисов доставки (`Glovo`, `Wolt`, `Bolt`), оставляя только те, для которых есть ссылка (либо специфичная для блюда, либо общая из `config`).
+*   **Рендеринг**:
+    *   Полупрозрачный фон на весь экран.
+    *   Центрированное окно с изображением блюда, названием, ценой, описанием и динамически сгенерированными кнопками для заказа через доступные сервисы.
+
+---
+
+## 3. Слой данных и конфигурация
+
+### `/services/googleSheetsService.ts`
+**Назначение**: Модуль, отвечающий за всю логику получения и обработки данных из Google Sheets.
+
+*   **Парсеры:**
+    *   `tsvToObjects<T>(tsv)`: Универсальная функция, которая превращает TSV-строку в массив объектов типа `T`. Автоматически определяет заголовки из первой строки и пытается преобразовать строковые 'TRUE'/'FALSE' и числа в соответствующие типы.
+    *   `tsvToKeyValue(tsv)`: Парсит TSV-файл с двумя колонками (ключ-значение) в один объект. Используется для `Config`.
+    *   `parseTranslations(tsv)`: Парсит TSV с переводами (ключ, KA, EN, RU) в вложенный объект `Record<Language, Record<string, string>>`.
+*   **Функции-фетчеры:**
+    *   `fetchMenuData()`, `fetchCategories()`, `fetchBusinessConfig()`, `fetchTranslations()`: Асинхронные функции. Каждая делает `fetch` по своему URL из `googleSheetConfig.ts`, получает текстовый TSV-ответ и передает его соответствующему парсеру для преобразования в структурированные данные.
+
+### `/googleSheetConfig.ts`
+**Назначение**: **Единственный файл, который нужно редактировать владельцу для настройки CMS.**
+
+*   Содержит объект `GOOGLE_SHEET_URLS` с четырьмя ключами: `MENU`, `CONFIG`, `UI_TEXT`, `CATEGORIES`.
+*   Владелец должен опубликовать каждую вкладку своей Google Таблицы в формате `.tsv` и вставить сюда соответствующие URL.
+
+### `/data/fallbackData.ts`
+**Назначение**: Резервный источник данных.
+
+*   Содержит экспорты `FALLBACK_BUSINESS_CONFIG`, `FALLBACK_MENU_ITEMS` и т.д.
+*   Эти данные имеют точно такую же структуру (типы), как и данные, получаемые из Google Sheets, что позволяет приложению бесшовно переключаться на них в случае сбоя.
+
+---
+
+## 4. Сборка и развертывание
+
+### `/package.json`
+*   Определяет зависимости проекта (`react`, `vite`, `typescript`).
+*   **Скрипты:**
+    *   `dev`: Запускает локальный сервер для разработки.
+    *   `build`: Запускает `tsc` для проверки типов, затем `vite build` для сборки проекта в папку `dist`. Также копирует `index.html` в `404.html` — это стандартный трюк для корректной работы SPA на GitHub Pages.
+    *   `preview`: Запускает локальный сервер для просмотра собранной версии.
+
+### `/vite.config.ts`
+*   Конфигурация сборщика Vite.
+*   `base: '/family-kitchen-website/'`: **Важная настройка для GitHub Pages.** Указывает, что все ресурсы сайта будут находиться в подпапке с названием репозитория.
+
+### `/.github/workflows/deploy.yml`
+*   **Назначение**: Файл конфигурации для GitHub Actions, автоматизирующий процесс развертывания.
+*   **Триггер**: Запускается при каждом `push` в ветку `main`.
+*   **Процесс (Jobs):**
+    1.  `checkout`: Скачивает код репозитория.
+    2.  `setup-node`: Устанавливает Node.js.
+    3.  `Install dependencies`: Выполняет `npm install`.
+    4.  `Build`: Выполняет `npm run build`.
+    5.  `Setup Pages` & `Upload artifact`: Готовит и загружает собранную папку `dist` как артефакт для GitHub Pages.
+    6.  `Deploy to GitHub Pages`: Развертывает этот артефакт на хостинге GitHub Pages.
